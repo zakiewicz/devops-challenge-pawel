@@ -54,7 +54,7 @@ To keep setup simple, I am going to use host network. Alternative would be to us
 - In nginx `default.conf` use corresponding IP addresses for `proxy_pass` targets.
 Above solution is not optimal, as it requires hard coded addresses in compose file and matching nginx config.
 
-Alternatively, all addresses could be to use variables in compose and for nginx create template config and entrypoint script that would generate config from template using `envsubst`.
+Alternatively, all addresses could be passed as variables to compose, while for nginx template config could be created and entrypoint script that would generate config from template using `envsubst` using container env variables set by compose. 
 
 <br>
 
