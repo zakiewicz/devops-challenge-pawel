@@ -1,0 +1,32 @@
+version: "3"
+services:
+  hello-world-golang:
+    build: hello-world-golang/
+    network_mode: "host"
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002/hello"]
+      interval: 2m
+      timeout: 1s
+      retries: 3
+      start_period: 30s
+  hello-world-nodejs:
+    build: hello-world-nodejs/
+    network_mode: "host"
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/hello"]
+      interval: 60s
+      timeout: 1s
+      retries: 3
+      start_period: 20s
+  hello-world-nginx:
+      build: hello-world-nginx/
+      network_mode: "host"
+      restart: on-failure
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:18181/health"]
+        interval: 45s
+        timeout: 1s
+        retries: 3
+        start_period: 30s

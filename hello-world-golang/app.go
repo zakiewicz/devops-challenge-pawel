@@ -12,7 +12,7 @@ func main() {
 	http.HandleFunc("/hello", HelloServer)
 	http.HandleFunc("/inc-score", IncrementCounter)
 	http.HandleFunc("/get-scores", GetScores)
-	http.ListenAndServe(":3002", nil)
+	http.ListenAndServe("127.0.0.1:3002", nil)
 }
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
