@@ -11,7 +11,10 @@ services:
       retries: 3
       start_period: 30s
   hello-world-nodejs:
-    build: hello-world-nodejs/
+    build:
+      context: hello-world-nodejs/
+      args:
+        NODE_BUILD_IMG_TAG: 18 # Overwritng default value from Docerfile to use newer version of node image
     network_mode: "host"
     restart: on-failure
     healthcheck:

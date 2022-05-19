@@ -93,3 +93,18 @@ Adding `RUN go build` to build the app could be considered, however, since it is
     - replaced `localhost` with `127.0.0.1` to improve performance
     - passing all traffic matching `^/golang/.*$` to Golang app, so any endpoint is supported (same can be done for Nodejs location)
     - added support for websockets as per [nginx docs](https://nginx.org/en/docs/http/websocket.html)
+
+---
+## TODO
+### Log collection!
+Only nginx container exposes (some) logs that available via `docker logs`. Some means of collecting logs, either by writing to mounted volumes or to docker logs, so they can consumed by log collection solution.
+Nodejs app writes logs in `/home/node/.npm/_logs/`.
+I am not aware that Golang app writes any.
+
+### Tests
+Containers should be tested after build, however I am not sure how to do this with compose (yet!). After docker build step it would be beneficial to be able to execute, for example InSpec tests to verify that build produced container with all required files, etc.
+
+### Limits
+It is advisable to set CPU, mem limits for containers, so individual containers do not drain resources in case of problems.
+
+
