@@ -5,11 +5,11 @@ services:
     network_mode: "host"
     restart: on-failure
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3002/hello"]
-      interval: 2m
+      test: ["CMD", "/usr/bin/curl", "-sS", "http://localhost:3002/hello"]
+      interval: 15s
       timeout: 1s
-      retries: 3
-      start_period: 30s
+      retries: 2
+      start_period: 20s
   hello-world-nodejs:
     build:
       context: hello-world-nodejs/
@@ -18,18 +18,18 @@ services:
     network_mode: "host"
     restart: on-failure
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/hello"]
-      interval: 60s
+      test: ["CMD", "/usr/bin/curl", "-sS", "http://localhost:3000/hello"]
+      interval: 15s
       timeout: 1s
-      retries: 3
+      retries: 2
       start_period: 20s
   hello-world-nginx:
       build: hello-world-nginx/
       network_mode: "host"
       restart: on-failure
       healthcheck:
-        test: ["CMD", "curl", "-f", "http://localhost:18181/health"]
-        interval: 45s
+        test: ["CMD", "/usr/bin/curl", "-sS", "http://localhost/health"]
+        interval: 15s
         timeout: 1s
-        retries: 3
+        retries: 2
         start_period: 30s

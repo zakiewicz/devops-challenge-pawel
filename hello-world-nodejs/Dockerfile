@@ -9,6 +9,9 @@ RUN npm install
 
 FROM node:${NODE_RUN_IMG_TAG}
 
+# Needed for healthcheck
+RUN apk --no-cache add curl
+
 COPY --from=npm-install --chown=node:node /app /app
 USER node:node
 WORKDIR /app

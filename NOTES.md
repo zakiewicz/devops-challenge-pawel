@@ -62,6 +62,7 @@ Alternatively, all addresses could be passed as variables to compose, while for 
 - Modified Go app to listen on loopback only.
 - Empty file `dockerfile` - replaced with `Dockerfile` that:
     - Uses official golang image from dockerhub - version can be passed as build arg `GO_IMG_TAG` (default latest alpine)
+    - Installs `curl` - needed by container healthcheck (executed locally!)
     - Copies Go app `app.go` to `/app/` (owned as `nobody:nobody`)
     - Sets `GOCACHE` env var to `/app/.cache/go-build` (so app can be build and run by `nobody`)
     - Changes user that app will be executed to `nobody` (no need for `root` since app binds to high port)
@@ -79,6 +80,7 @@ Adding `RUN go build` to build the app could be considered, however, since it is
     - introduce stages:
         - `npm-install` using Debian based image to execute `npm install`
         - 'run' stage for final container based on alpine image to run application (I am not very familiar with node, I am not sure I am coping right files from 'build' stage)
+    - install `curl` - needed by container healthcheck (executed locally!)
     - run app as `node` user
 
 <br>
@@ -107,4 +109,11 @@ Containers should be tested after build, however I am not sure how to do this wi
 ### Limits
 It is advisable to set CPU, mem limits for containers, so individual containers do not drain resources in case of problems.
 
+### Handling for failed healthchecks
 
+### Container and image tagging
+### App configuration
+In production applications' parameters, like ports to listen on, should be configurable, not hard-coded.
+
+### Proxy configuration
+For Golang app `location /golang/` is used meaning all requests with path beginning with `/golang/` are proxied to the app. This could be replaced with a regex covering all API endpoints. This would result with only requests to valid endpoints to be passed to the app and other requests being served 404 by proxy, thus reducing load on the app. However, as a downside, introducing new API endpoint would require rebuilding/reconfiguring proxy, not only app container.
