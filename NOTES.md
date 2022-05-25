@@ -2,6 +2,16 @@
 
 This README file should contain notes used while working on the coding challenge.
 
+---
+### Run with compose
+In repository root:
+```
+docker compose up
+```
+or
+```
+docker-compose up
+```
 
 ### Test with curl
 ```
